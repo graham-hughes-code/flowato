@@ -1,0 +1,10 @@
+[workspace]
+
+members = [
+    "constant",
+    "markdown_to_html",
+    "math/add",
+    "math/div",
+    "math/mul",
+    "math/sub"
+]

@@ -37,7 +37,9 @@
         "providerShortName": null,
         "signingIdentity": null
       },
-      "resources": [],
+      "resources": [
+        "../std/*"
+      ],
       "shortDescription": "",
       "targets": "all",
       "windows": {
