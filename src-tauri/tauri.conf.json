@@ -28,7 +28,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "com.flowato.dev",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -58,7 +58,8 @@
         "height": 600,
         "resizable": true,
         "title": "flowato-prototype",
-        "width": 800
+        "width": 800,
+        "fileDropEnabled": false
       }
     ]
   }

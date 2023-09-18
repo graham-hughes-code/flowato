@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tauri-apps/api": "^1.4.0",
     "autoprefixer": "10.4.15",
     "eslint": "8.49.0",
     "eslint-config-next": "13.4.19",
@@ -16,6 +17,9 @@
     "postcss": "8.4.29",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "tailwindcss": "3.3.3"
+    "reactflow": "^11.8.3",
+    "tailwindcss": "3.3.3",
+    "uuid": "^9.0.1",
+    "wc-react": "^0.5.1"
   }
 }
