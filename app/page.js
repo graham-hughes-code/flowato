@@ -133,6 +133,7 @@ export default function App() {
   return (
     <div className="dndflow">
       <ReactFlowProvider>
+        <SideBar />
         <div className="reactflow-wrapper" ref={reactFlowWrapper}>
           <ReactFlow
             nodes={nodes}
@@ -157,7 +158,6 @@ export default function App() {
             <Background variant="dots" gap={12} size={1} style={{backgroundColor: '#03011f'}}/>
           </ReactFlow>
         </div>
-        <SideBar />
       </ReactFlowProvider>
     </div>
   );
