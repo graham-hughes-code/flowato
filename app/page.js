@@ -1,5 +1,5 @@
 "use client"
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState, useEffect } from 'react';
 import ReactFlow, {
   MiniMap,
   Controls,
@@ -20,6 +20,8 @@ import Node from './components/Node.jsx';
 import example from './example.json'
 
 import SideBar from './components/Sidebar';
+
+import { invoke } from '@tauri-apps/api/tauri'
 
 const onUpdateContext = (data, node_id) => {
   example.graph.nodes.forEach((element, index) => {
@@ -57,6 +59,12 @@ export default function App() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
+
+  useEffect(() => {
+    invoke('node_frontend', {source: 'std\\constant.wasm'})
+      .then(console.log)
+      .catch(console.error)
+  }, [])
 
   const onConnect = useCallback((params) => {
     

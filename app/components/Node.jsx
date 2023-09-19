@@ -18,7 +18,7 @@ function Node({data, isConnectable}) {
   //   console.log(moduleData.doSomething('test'));
   // })
 
-  useEffect(() => {import("../components/testWebCom.js"); console.log('afjadjf')}, []);
+  useEffect(() => {import("../components/testWebCom.js")}, []);
   const HelloWorld = wrapWc('hello-world');
 
   const inlets =  def.inlets.map((e, i) => {

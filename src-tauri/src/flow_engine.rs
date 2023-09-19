@@ -1,5 +1,6 @@
 pub mod engine {
     use std::fs::read;
+    use std::path::Path;
     use std::str;
     use extism::{Plugin, Context};
     use serde_json::Value;
@@ -232,7 +233,7 @@ pub mod engine {
             merge(&mut inputs, &current_context_json);
             println!("inputs: {:?}", serde_json::to_string(&inputs).unwrap());
 
-            let data: Vec<u8> = try_load_wasm_file(&current_node.source).unwrap();
+            let data: Vec<u8> = try_load_wasm_file(Path::new(&current_node.source)).unwrap();
             let results: String = try_run_wasm(
                 data,
                 &current_node.name,
@@ -251,10 +252,10 @@ pub mod engine {
         }
     }
 
-    fn try_load_wasm_file(file_path: &str) -> Result<Vec<u8>, String> {
+    fn try_load_wasm_file(file_path: &Path) -> Result<Vec<u8>, String> {
         match read(file_path) {
             Ok(data) => Ok(data),
-            Err(e) => Err(format!("Error trying to load file {file_path} {e}"))
+            Err(e) => Err(format!("Error trying to load file {} {}", &file_path.display(), e))
         }
     }
 
@@ -270,8 +271,8 @@ pub mod engine {
         }
     }
 
-    pub fn get_node_frontend(source: &str) -> Result<String, String> {
-        let data: Vec<u8> = try_load_wasm_file(source).unwrap();
+    pub fn get_node_frontend(source: &Path) -> Result<String, String> {
+        let data: Vec<u8> = try_load_wasm_file(source)?;
         let results: String = try_run_wasm(
             data,
             "node_front_end",
@@ -280,8 +281,8 @@ pub mod engine {
         Ok(results)
     }
 
-    pub fn get_node_def(source: &str) -> Result<String, String> {
-        let data: Vec<u8> = try_load_wasm_file(source).unwrap();
+    pub fn get_node_def(source: &Path) -> Result<String, String> {
+        let data: Vec<u8> = try_load_wasm_file(source)?;
         let results: String = try_run_wasm(
             data,
             "describe_node",
