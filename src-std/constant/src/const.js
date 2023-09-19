@@ -4,7 +4,7 @@ template.innerHTML = `
 <input type="text" id="const_text"/>
 `;
 
-class Const extends HTMLElement {
+export class NodeFrontEnd extends HTMLElement {
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
@@ -31,5 +31,3 @@ class Const extends HTMLElement {
     const_text.oninput  = () => {this.data_callback(JSON.stringify({value: (isNaN(filterFloat(const_text.value))?const_text.value:filterFloat(const_text.value))}))};
   }
 }
-
-customElements.define("const-node", Const);

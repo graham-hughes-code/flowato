@@ -1,5 +1,5 @@
 "use client"
-import { useCallback, useMemo, useEffect, lazy } from 'react';
+import { useCallback, useMemo, useEffect, useState } from 'react';
 import { useUpdateNodeInternals } from 'reactflow';
 import { Handle, Position } from 'reactflow';
 import { useNodeId } from 'reactflow';
@@ -13,18 +13,23 @@ import './Node.css';
 function Node({data, isConnectable}) {
   const updateNodeInternals = useUpdateNodeInternals();
   const nodeId = useNodeId();
+  const [NodeWP, setNodeWP] = useState(<div></div>)
 
   const def = data.def;
-
-  let HelloWorld = wrapWc('const-node');
 
   useEffect(() => {
     invoke('node_frontend', {source: def.source})
       .then((s) => {
-        console.log(s);
-        import(/* webpackIgnore: true */ `data:text/javascript;charset=utf-8,${encodeURIComponent(s)}`).then(() =>
-          console.log(s)
-        )
+        if( s !== "") {
+          import(/* webpackIgnore: true */ `data:text/javascript;charset=utf-8,${encodeURIComponent(s)}`).then((node) =>{
+          console.log(`node-${def.name}`);
+          if (!customElements.get(`node-${def.name}`)) {
+            customElements.define(`node-${def.name}`, node.NodeFrontEnd);
+          };
+          const Wrapper = wrapWc(`node-${def.name}`);
+          setNodeWP(<Wrapper data={''} data_callback={handleChange}></Wrapper>);
+        })
+        }
       })
       .catch(console.error)
   }, [])
@@ -46,7 +51,7 @@ function Node({data, isConnectable}) {
       <div>
         <div className='custom-node-tittle'>{data.def.name.toUpperCase()}</div>
         <div className='nodrag' style={{margin: 6, fontSize: ".5rem", color: 'black'}}>
-          <HelloWorld data={''} data_callback={handleChange}></HelloWorld>
+          {NodeWP}
         </div>
       </div>
     </div>
