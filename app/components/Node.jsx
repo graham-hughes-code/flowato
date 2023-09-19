@@ -1,9 +1,11 @@
 "use client"
-import { useCallback, useMemo, useEffect } from 'react';
+import { useCallback, useMemo, useEffect, lazy } from 'react';
 import { useUpdateNodeInternals } from 'reactflow';
 import { Handle, Position } from 'reactflow';
 import { useNodeId } from 'reactflow';
 import { wrapWc } from 'wc-react';
+
+import { invoke } from '@tauri-apps/api/tauri'
 
 import './Node.css';
 
@@ -14,12 +16,18 @@ function Node({data, isConnectable}) {
 
   const def = data.def;
 
-  // import("data:text/javascript,export function doSomething(str) { return str + '-done'; }").then((moduleData) => {
-  //   console.log(moduleData.doSomething('test'));
-  // })
+  let HelloWorld = wrapWc('const-node');
 
-  useEffect(() => {import("../components/testWebCom.js")}, []);
-  const HelloWorld = wrapWc('hello-world');
+  useEffect(() => {
+    invoke('node_frontend', {source: def.source})
+      .then((s) => {
+        console.log(s);
+        import(/* webpackIgnore: true */ `data:text/javascript;charset=utf-8,${encodeURIComponent(s)}`).then(() =>
+          console.log(s)
+        )
+      })
+      .catch(console.error)
+  }, [])
 
   const inlets =  def.inlets.map((e, i) => {
     return <Handle key={e.id} id={e.id} type="target" position={Position.Left} style={{ top: 25 + i * 10}} isConnectable={isConnectable} className='custom-node-handle'/>;
