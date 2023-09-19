@@ -19,7 +19,6 @@ fn node_frontend(source: &str, handle: tauri::AppHandle) -> String {
   let mut full_path = PathBuf::new();
 
   let resource_path = handle.path_resolver()
-    // .resource_dir()
     .resolve_resource("../")
     .expect("failed to resolve resource");
   let compatible_path = dunce::canonicalize(&resource_path).unwrap(); // FIXME: used because windows paths are dumb
@@ -27,5 +26,5 @@ fn node_frontend(source: &str, handle: tauri::AppHandle) -> String {
   full_path.push(compatible_path);
   full_path.push(source);
 
-  get_node_frontend(&full_path).unwrap()
+  get_node_frontend(&full_path).unwrap_or("".to_string())
 }

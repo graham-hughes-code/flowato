@@ -275,9 +275,9 @@ pub mod engine {
         let data: Vec<u8> = try_load_wasm_file(source)?;
         let results: String = try_run_wasm(
             data,
-            "node_front_end",
+            "node_frontend",
             ""
-        ).unwrap();
+        )?;
         Ok(results)
     }
 
@@ -287,7 +287,7 @@ pub mod engine {
             data,
             "describe_node",
             ""
-        ).unwrap();
+        )?;
         Ok(results)
     }
 
