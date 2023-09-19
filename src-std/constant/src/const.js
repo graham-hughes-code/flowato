@@ -32,4 +32,4 @@ class Const extends HTMLElement {
   }
 }
 
-customElements.define("Const-node", Const);
+customElements.define("const-node", Const);
