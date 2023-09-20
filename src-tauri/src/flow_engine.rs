@@ -36,7 +36,7 @@ pub mod engine {
             pub name: String,
             pub source: String,
             pub pos: Pos,
-            pub context: String,
+            pub context: String, // TODO: switch to serde_json::Value
             pub inlets: Vec<Inlet>,
             pub outlets: Vec<Outlet>
         }

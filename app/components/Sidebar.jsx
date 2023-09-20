@@ -15,7 +15,7 @@ export default function SideBar() {
         <div className="description">Nodes</div>
         <div className="dndnode input" onDragStart={(event) => onDragStart(event, 'custom',
           {"name": "add", "source": "std/add.wasm",
-           "context": "{}",
+           "context": {},
            "inlets": [
              {"id": new_uuid(), "name": "a", "type": "number", "required": true},
              {"id": new_uuid(), "name": "b", "type": "number", "required": true}],
@@ -26,7 +26,7 @@ export default function SideBar() {
         </div>
         <div className="dndnode input" onDragStart={(event) => onDragStart(event, 'custom',
           {"name": "div", "source": "std/add.wasm",
-           "context": "{}",
+           "context": {},
            "inlets": [
              {"id": new_uuid(), "name": "a", "type": "number", "required": true},
              {"id": new_uuid(), "name": "b", "type": "number", "required": true}],
@@ -37,7 +37,7 @@ export default function SideBar() {
         </div>
          <div className="dndnode input" onDragStart={(event) => onDragStart(event, 'custom',
           {"name": "constant", "source": "std/constant.wasm",
-           "context": "{\"value\": 3}",
+           "context": {"value": ""},
            "inlets": [],
            "outlets": [
              {"id": new_uuid(), "name": "a", "type": "number"}

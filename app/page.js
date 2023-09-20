@@ -15,6 +15,10 @@ import {v4 as uuidv4} from 'uuid';
 
 import 'reactflow/dist/style.css';
 
+import { invoke } from '@tauri-apps/api/tauri'
+
+import { wrapWc } from 'wc-react';
+
 import Node from './components/Node.jsx';
 
 import example from './example.json'
@@ -29,11 +33,28 @@ const onUpdateContext = (data, node_id) => {
   });
 };
 
+const sources = [...new Set(example.graph.nodes.map((n) => {return {"name": n.name, "source": n.source}}))];
+
+sources.forEach((source) => {
+  "use client"
+  invoke('node_frontend', {source: source.source})
+    .then((s) => {
+      if( s !== "") {
+        import(/* webpackIgnore: true */ `data:text/javascript;charset=utf-8,${encodeURIComponent(s)}`).then((node) =>{
+        if (!customElements.get(`node-${source.name}`)) {
+          customElements.define(`node-${source.name}`, node.NodeFrontEnd);
+        };
+      })
+      }
+    })
+    .catch(console.error)
+});
+
 const initialNodes = [];
 
 example.graph.nodes.map((node, i) => {
   initialNodes.push(
-    { id: node.id, type: 'custom', position: { x: node.pos.x, y: node.pos.y }, data: {def: node, data_callback: onUpdateContext}}
+    { id: node.id, type: 'custom', position: { x: node.pos.x, y: node.pos.y }, data: {def: node, data_callback: onUpdateContext, Wrapper: wrapWc(`node-${node.name}`)}}
   )
 });
 
@@ -114,7 +135,9 @@ export default function App() {
         id: newId,
         type: data.nodeType,
         position,
-        data: { def: data.def},
+        data: {def: data.def,
+               data_callback: onUpdateContext,
+               Wrapper: wrapWc(`node-${data.def.name}`)},
       };
 
       setNodes((nds) => nds.concat(newNode));

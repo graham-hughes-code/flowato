@@ -3,7 +3,7 @@
   "graph": {
     "nodes": [
       {"id": "n_asdfasdfg234f", "name": "add", "source": "std/add.wasm", "pos": {"x": 300, "y": 300},
-        "context": "{}",
+        "context": {},
         "inlets": [
         {"id": "in_as3dsffg2334f", "name": "a", "type": "number", "required": true},
         {"id": "in_42dgsjdfg22344f", "name": "b", "type": "number", "required": true}],
@@ -11,25 +11,25 @@
         {"id": "out_asdfasdafdwer234f", "name": "c", "type": "number"}
        ]},
        {"id": "n_tysfsaddfgjgff","name": "constant", "source": "std/constant.wasm", "pos": {"x": 100, "y": 250},
-        "context": "{\"value\": 3}",
+        "context": {"value": 3},
         "inlets": [],
        "outlets": [
         {"id": "out_aadfadfe423hs", "name": "a", "type": "number"}
        ]},
        {"id": "n_tysfsadgsagjgff", "name": "constant", "source": "std/constant.wasm", "pos": {"x": 100, "y": 350},
-        "context": "{\"value\": 2}",
+        "context": {"value": 2},
         "inlets": [],
        "outlets": [
         {"id": "out_adddddfe423hs", "name": "a", "type": "number"}
        ]},
        {"id": "n_gkeasdfagjgff", "name": "constant", "source": "std/constant.wasm", "pos": {"x": 300, "y": 400},
-        "context": "{\"value\": 5}",
+        "context": {"value": 5},
         "inlets": [],
        "outlets": [
         {"id": "out_ahhsadfe423hs", "name": "a", "type": "number"}
        ]},
        {"id": "n_asdafdfjlf4f","name": "div", "source": "std/div.wasm", "pos": {"x": 500, "y": 350},
-        "context": "{}",
+        "context": {},
         "inlets": [
         {"id": "in_as3afdlvk34f", "name": "a", "type": "number", "required": true},
         {"id": "in_42dgterl344f", "name": "b", "type": "number", "required": true}],
@@ -37,7 +37,7 @@
         {"id": "out_asdfdaslw2er234f", "name": "c", "type": "number"}
        ]},
        {"id": "n_gkeaadfweradfgff", "name": "constant", "source": "std/constant.wasm", "pos": {"x": 300, "y": 500},
-        "context": "{\"value\": \"## hello _two_\"}",
+        "context": {"value": "## hello _two_"},
         "inlets": [],
        "outlets": [
         {"id": "out_ahhs432dfa423hs", "name": "a", "type": "string"}
