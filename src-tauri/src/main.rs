@@ -36,7 +36,7 @@ struct Info {
 }
 
 #[tauri::command]
-fn run_flow_tauri(info: String, handle: tauri::AppHandle) -> String {
+async fn run_flow_tauri(info: String, handle: tauri::AppHandle) -> String {
 
   println!("{:?}", info);
   let info: Result<Info, String> = match serde_json::from_str(&info) {
