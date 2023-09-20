@@ -31,6 +31,11 @@ const onUpdateContext = (data, node_id) => {
       example.graph.nodes[index].context = data;
     }
   });
+  invoke('run_flow_tauri', {info: JSON.stringify({state: example, triggered_by: node_id})})
+    .then((s) => {
+      console.log('ran');
+    })
+    .catch(console.error)
 };
 
 const sources = [...new Set(example.graph.nodes.map((n) => {return {"name": n.name, "source": n.source}}))];

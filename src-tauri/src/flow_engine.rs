@@ -1,6 +1,6 @@
 pub mod engine {
     use std::fs::read;
-    use std::path::Path;
+    use std::path::{Path, PathBuf};
     use std::str;
     use extism::{Plugin, Context};
     use serde_json::Value;
@@ -36,7 +36,7 @@ pub mod engine {
             pub name: String,
             pub source: String,
             pub pos: Pos,
-            pub context: String, // TODO: switch to serde_json::Value
+            pub context: Value,
             pub inlets: Vec<Inlet>,
             pub outlets: Vec<Outlet>
         }
@@ -183,7 +183,7 @@ pub mod engine {
         }
     }
 
-    pub fn run_flow(state: &mut state::State, triggered_by: &str) {
+    pub fn run_flow(state: &mut state::State, triggered_by: &str, run_path: &Path) {
 
         state.clear_last_values();
 
@@ -228,12 +228,16 @@ pub mod engine {
                 }
             }
 
-            let current_context_json: Value = pull_context(&current_node.context);
+            let current_context_json: Value = pull_context(current_node.context.clone());
 
             merge(&mut inputs, &current_context_json);
             println!("inputs: {:?}", serde_json::to_string(&inputs).unwrap());
 
-            let data: Vec<u8> = try_load_wasm_file(Path::new(&current_node.source)).unwrap();
+            let mut full_path = PathBuf::new();
+            full_path.push(run_path);
+            full_path.push(Path::new(&current_node.source));
+
+            let data: Vec<u8> = try_load_wasm_file(&full_path).unwrap();
             let results: String = try_run_wasm(
                 data,
                 &current_node.name,
@@ -296,9 +300,9 @@ pub mod engine {
         pub context: Value
     }
 
-    fn pull_context(con: &str) -> Value {
+    fn pull_context(con: Value) -> Value {
         serde_json::value::to_value(ContextWrapper {
-            context: serde_json::from_str( con ).unwrap()
+            context: con
         }).unwrap()
     }
 
