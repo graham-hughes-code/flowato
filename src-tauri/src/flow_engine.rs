@@ -26,8 +26,8 @@ pub mod engine {
 
         #[derive(Serialize, Deserialize, Debug)]
         pub struct Pos {
-            pub x: i32,
-            pub y: i32
+            pub x: f32,
+            pub y: f32
         }
 
         #[derive(Serialize, Deserialize, Debug)]

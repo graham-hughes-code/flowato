@@ -10,6 +10,7 @@ import ReactFlow, {
   addEdge,
   MarkerType,
   ReactFlowProvider,
+  onNodeDragStop,
 } from 'reactflow';
 import {v4 as uuidv4} from 'uuid';
 
@@ -25,6 +26,7 @@ import example from './example.json'
 
 import SideBar from './components/Sidebar';
 
+
 const onUpdateContext = (data, node_id) => {
   example.graph.nodes.forEach((element, index) => {
     if (element.id == node_id ){
@@ -32,8 +34,8 @@ const onUpdateContext = (data, node_id) => {
     }
   });
   invoke('run_flow_tauri', {info: JSON.stringify({state: example, triggered_by: node_id})})
-    .then((s) => {
-      console.log('ran');
+    .then((state) => {
+      console.log(state);
     })
     .catch(console.error)
 };
@@ -158,6 +160,14 @@ export default function App() {
     });
   }, []);
 
+  const onNodeDragStop = useCallback((_, node) => {
+    example.graph.nodes.forEach((n) => {
+      if (n.id == node.id){
+        n.pos = {x: node.position.x, y: node.position.y};
+      }
+    });
+  });
+
   return (
     <div className="dndflow">
       <ReactFlowProvider>
@@ -174,6 +184,7 @@ export default function App() {
             onNodesDelete={onNodesDelete}
             onEdgeUpdateStart={onEdgeUpdateStart}
             onEdgeUpdateEnd={onEdgeUpdateEnd}
+            onNodeDragStop={onNodeDragStop}
             onConnect={onConnect}
             onDrop={onDrop}
             onDragOver={onDragOver}
