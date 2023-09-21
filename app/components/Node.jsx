@@ -10,15 +10,12 @@ import './Node.css';
 function Node({data, isConnectable}) {
   const updateNodeInternals = useUpdateNodeInternals();
   const nodeId = useNodeId();
-  const [NodeWP, setNodeWP] = useState(<div></div>)
 
-  const def = data.def;
-
-  const inlets =  def.inlets.map((e, i) => {
+  const inlets =  data.def.inlets.map((e, i) => {
     return <Handle key={e.id} id={e.id} type="target" position={Position.Left} style={{ top: 25 + i * 10}} isConnectable={isConnectable} className='custom-node-handle'/>;
   });
 
-  const outlets = def.outlets.map((e, i) => {
+  const outlets = data.def.outlets.map((e, i) => {
     return <Handle key={e.id} id={e.id} type="source" position={Position.Right} style={{ top: 25 + i * 10}} isConnectable={isConnectable} className='custom-node-handle'/>;
   });
 

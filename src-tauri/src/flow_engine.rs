@@ -99,13 +99,22 @@ pub mod engine {
                     );
                 }
 
-                for (outlet_id, value_to_push) in outlet_to_result{
+                for (outlet_id, value_to_push) in outlet_to_result {
                     for edge in &mut self.graph.edges {
                         if edge.start_let == outlet_id {
                             edge.last_value = Some(serde_json::to_string(&value_to_push).unwrap());
                         }
                     }
                 }
+
+            }
+
+            pub fn push_context_to_node(&mut self, node_id: &str, results: &str) {
+                let current_node: &mut Node = self.try_find_node_mut(node_id).unwrap();
+                let results_value: Value = serde_json::from_str(results).unwrap();
+                let value_to_push: &Value = &results_value["context"];
+
+                current_node.context = value_to_push.clone();
 
             }
 
@@ -165,6 +174,15 @@ pub mod engine {
                 for ele in &self.graph.nodes {
                     if ele.id == node_id {
                         return Some(&ele);
+                    }
+                }
+                None
+            }
+
+            pub fn try_find_node_mut(&mut self, node_id: &str) -> Option<&mut Node> {
+                for ele in &mut self.graph.nodes {
+                    if ele.id == node_id {
+                        return Some(ele);
                     }
                 }
                 None
@@ -246,6 +264,7 @@ pub mod engine {
 
             println!("results: {results}");
 
+            state.push_context_to_node(&ptr, &results);
             state.push_values_to_edges(&ptr, &results);
 
             match state.try_find_node_next_ids(&ptr) {

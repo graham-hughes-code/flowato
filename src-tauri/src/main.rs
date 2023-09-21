@@ -56,5 +56,5 @@ async fn run_flow_tauri(info: String, handle: tauri::AppHandle) -> String {
 
   run_flow(&mut state, &triggered_by, &compatible_path);
 
-  return "".to_string();
+  return serde_json::to_string(&state).unwrap();
 }

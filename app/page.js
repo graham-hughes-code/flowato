@@ -27,19 +27,6 @@ import example from './example.json'
 import SideBar from './components/Sidebar';
 
 
-const onUpdateContext = (data, node_id) => {
-  example.graph.nodes.forEach((element, index) => {
-    if (element.id == node_id ){
-      example.graph.nodes[index].context = data;
-    }
-  });
-  invoke('run_flow_tauri', {info: JSON.stringify({state: example, triggered_by: node_id})})
-    .then((state) => {
-      console.log(state);
-    })
-    .catch(console.error)
-};
-
 const sources = [...new Set(example.graph.nodes.map((n) => {return {"name": n.name, "source": n.source}}))];
 
 sources.forEach((source) => {
@@ -61,7 +48,7 @@ const initialNodes = [];
 
 example.graph.nodes.map((node, i) => {
   initialNodes.push(
-    { id: node.id, type: 'custom', position: { x: node.pos.x, y: node.pos.y }, data: {def: node, data_callback: onUpdateContext, Wrapper: wrapWc(`node-${node.name}`)}}
+    { id: node.id, type: 'custom', position: { x: node.pos.x, y: node.pos.y }, data: {def: node, Wrapper: wrapWc(`node-${node.name}`)}}
   )
 });
 
@@ -82,7 +69,26 @@ const delkeys = ['Backspace', 'Delete']
 export default function App() {
   const reactFlowWrapper = useRef(null);
   const edgeUpdateSuccessful = useRef(true);
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+
+  const onUpdateContext = (data, node_id) => {
+    example.graph.nodes.forEach((element, index) => {
+      if (element.id == node_id ) {
+        example.graph.nodes[index].context = data;
+      }
+    });
+    invoke('run_flow_tauri', {info: JSON.stringify({state: example, triggered_by: node_id})})
+      .then((state) =>{
+        setNodes((nds) =>
+          nds.map((node) => {
+            node.data = {...node.data, def: {...node.data.def, context: {}}}
+            return node;
+          })
+        );
+      })
+      .catch(console.error)
+  };
+
+  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes.map((n) => { n.data = {...n.data, data_callback: onUpdateContext}; return n; }));
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
 
@@ -162,7 +168,7 @@ export default function App() {
 
   const onNodeDragStop = useCallback((_, node) => {
     example.graph.nodes.forEach((n) => {
-      if (n.id == node.id){
+      if (n.id == node.id) {
         n.pos = {x: node.position.x, y: node.position.y};
       }
     });

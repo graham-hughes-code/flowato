@@ -43,12 +43,18 @@
         {"id": "out_ahhs432dfa423hs", "name": "a", "type": "string"}
        ]},
        {"id": "n_asdafdftsdf274f", "name": "markdown_to_html", "source": "std/markdown_to_html.wasm", "pos": {"x": 500, "y": 500},
-        "context": "{}",
+        "context": {},
         "inlets": [
         {"id": "in_as3939dafvk34f", "name": "a", "type": "string", "required": true}],
        "outlets": [
         {"id": "out_asdffdasl7234f", "name": "c", "type": "string"}
-       ]}],
+       ]},
+       {"id": "n_asdkslcsfekkesfaf", "name": "view", "source": "std/view.wasm", "pos": {"x": 900, "y": 500},
+        "context": {},
+        "inlets": [
+        {"id": "in_as3943834234234", "name": "a", "type": "string", "required": true}],
+        "outlets": []}
+      ],
     "edges": [
       {"id": "edge_adfadfgewbaweg",
        "start": "n_tysfsaddfgjgff",

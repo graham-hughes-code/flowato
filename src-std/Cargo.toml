@@ -6,5 +6,6 @@ members = [
     "math/add",
     "math/div",
     "math/mul",
-    "math/sub"
+    "math/sub",
+    "view"
 ]
