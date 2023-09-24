@@ -79,7 +79,6 @@ export default function App() {
     invoke('run_flow_tauri', {info: JSON.stringify({state: example, triggered_by: node_id})})
       .then((state) => {
         state = JSON.parse(state);
-        console.log(state)
         setNodes((nds) =>
           nds.map((node) => {
             const new_node = state.graph.nodes.find((n) => {return n.id == node.id});

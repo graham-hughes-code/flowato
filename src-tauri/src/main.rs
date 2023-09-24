@@ -15,7 +15,7 @@ fn main() {
 }
 
 #[tauri::command]
-fn node_frontend(source: &str, handle: tauri::AppHandle) -> String {
+async fn node_frontend(source: &str, handle: tauri::AppHandle) -> Result<String, String> {
   let mut full_path = PathBuf::new();
 
   let resource_path = handle.path_resolver()
@@ -26,7 +26,9 @@ fn node_frontend(source: &str, handle: tauri::AppHandle) -> String {
   full_path.push(compatible_path);
   full_path.push(source);
 
-  get_node_frontend(&full_path).unwrap_or("".to_string())
+  let res = get_node_frontend(&full_path).unwrap_or("".to_string());
+
+  Ok(res)
 }
 
 #[derive(Serialize, Deserialize, Debug)]
