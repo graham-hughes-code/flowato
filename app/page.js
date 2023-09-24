@@ -77,10 +77,15 @@ export default function App() {
       }
     });
     invoke('run_flow_tauri', {info: JSON.stringify({state: example, triggered_by: node_id})})
-      .then((state) =>{
+      .then((state) => {
+        state = JSON.parse(state);
+        console.log(state)
         setNodes((nds) =>
           nds.map((node) => {
-            node.data = {...node.data, def: {...node.data.def, context: {}}}
+            const new_node = state.graph.nodes.find((n) => {return n.id == node.id});
+            if (JSON.stringify(new_node.context) !== JSON.stringify(node.data.def.context)) {
+              node.data = {...node.data, def: {...node.data.def, context: new_node.context}};
+            }
             return node;
           })
         );

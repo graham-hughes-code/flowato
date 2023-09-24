@@ -18,6 +18,9 @@ export class NodeFrontEnd extends HTMLElement {
   attributeChangedCallback(property, oldValue, newValue) {
     if (oldValue === newValue) return;
     this[property] = newValue;
+
+    const const_text = this.shadowRoot.getElementById('const_text');
+    const_text.value = JSON.parse(this.data);
   }
 
   connectedCallback() {
@@ -27,11 +30,8 @@ export class NodeFrontEnd extends HTMLElement {
       return Number(value);
       return NaN;
     };
-
     const const_text = this.shadowRoot.getElementById('const_text');
-    if (this.hasOwnProperty('data')) { // FIXME: work around for new node creation
-      const_text.value = this.data.value;
-    }
+    const_text.value = JSON.parse(this.data);
     const_text.oninput  = () => {this.data_callback({value: (isNaN(filterFloat(const_text.value))?const_text.value:filterFloat(const_text.value))})};
   }
 }

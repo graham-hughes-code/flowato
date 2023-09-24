@@ -114,8 +114,9 @@ pub mod engine {
                 let results_value: Value = serde_json::from_str(results).unwrap();
                 let value_to_push: &Value = &results_value["context"];
 
-                current_node.context = value_to_push.clone();
-
+                if value_to_push != &serde_json::json!(null) {
+                    current_node.context = value_to_push.clone();
+                }
             }
 
             pub fn try_find_node_next_ids(&self, node_id: &str) -> Option<Vec<String>> {
