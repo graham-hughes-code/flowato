@@ -1,7 +1,6 @@
 const template = document.createElement("template");
 template.innerHTML = `
-<label for="const_text">Value:</label>
-<input type="text" id="const_text"/>
+<div id="text">Value: </div>
 `;
 
 export class NodeFrontEnd extends HTMLElement {
@@ -19,8 +18,8 @@ export class NodeFrontEnd extends HTMLElement {
     if (oldValue === newValue) return;
     this[property] = newValue;
 
-    const const_text = this.shadowRoot.getElementById('const_text');
-    const_text.value = JSON.parse(this.data);
+    const const_text = this.shadowRoot.getElementById('text');
+    const_text.innerText = "Value: " + JSON.parse(this.data);
   }
 
   connectedCallback() {
@@ -30,8 +29,7 @@ export class NodeFrontEnd extends HTMLElement {
       return Number(value);
       return NaN;
     };
-    const const_text = this.shadowRoot.getElementById('const_text');
-    const_text.value = JSON.parse(this.data);
-    const_text.oninput  = () => {this.data_callback({value: (isNaN(filterFloat(const_text.value))?const_text.value:filterFloat(const_text.value))})};
+    const const_text = this.shadowRoot.getElementById('text');
+    const_text.innerText = "Value: " + JSON.parse(this.data);
   }
 }
