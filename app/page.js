@@ -89,7 +89,7 @@ export default function App() {
           })
         );
       })
-      .catch(console.error)
+      .catch(console.error);
   };
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes.map((n) => { n.data = {...n.data, data_callback: onUpdateContext}; return n; }));
