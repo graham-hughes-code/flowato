@@ -32,18 +32,12 @@ pub fn markdown_to_html(input: String) -> FnResult<Json<Output>> {
 #[plugin_fn]
 pub fn describe_node(_: ()) -> FnResult<String>
 {
-    let dis: String =
-        r#"{"inputs": {
-                "a": {
-                    "type": "string"
-                }
-            }, 
-            "Output": {
-                "c": {
-                    "type": "string"
-                }
-            }
-        }"#.to_string();
+    let dis: String = r#"{"name": "markdown_to_html",
+                        "source": "std/markdown_to_html.wasm",
+                        "context": {},
+                        "inlets": [{"name": "a", "type": "string", "required": true}],
+                        "outlets": [{"name": "c", "type": "string"}]
+                        }"#.to_string();
 
     Ok(dis)
 }

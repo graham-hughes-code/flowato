@@ -2,14 +2,15 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 pub mod flow_engine;
-
+use std::fs;
 use std::path::PathBuf;
+use serde_json::Value;
 use serde::{Deserialize, Serialize};
-use flow_engine::engine::{get_node_frontend, run_flow, state::State};
+use flow_engine::engine::{get_node_frontend, run_flow, get_node_def, state::State};
 
 fn main() {
   tauri::Builder::default()
-    .invoke_handler(tauri::generate_handler![node_frontend, run_flow_tauri])
+    .invoke_handler(tauri::generate_handler![node_frontend, run_flow_tauri, get_all_nodes_defs])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
 }
@@ -40,7 +41,6 @@ struct Info {
 #[tauri::command]
 async fn run_flow_tauri(info: String, handle: tauri::AppHandle) -> String {
 
-  println!("{:?}", info);
   let info: Result<Info, String> = match serde_json::from_str(&info) {
                     Ok(info) => Ok(info),
                     Err(e) => return format!("Error malformed state json {:?}", e)
@@ -59,4 +59,30 @@ async fn run_flow_tauri(info: String, handle: tauri::AppHandle) -> String {
   run_flow(&mut state, &triggered_by, &compatible_path);
 
   return serde_json::to_string(&state).unwrap();
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+struct NodesDefsOut {
+  node_defs: Vec<Value>
+}
+
+#[tauri::command]
+async fn get_all_nodes_defs(handle: tauri::AppHandle) -> String {
+  let resource_path = handle.path_resolver()
+    .resolve_resource("../")
+    .expect("failed to resolve resource");
+  let mut compatible_path: PathBuf = dunce::canonicalize(&resource_path).unwrap();
+  compatible_path.push("std");
+
+  let mut result_strings: Vec<String> = Vec::new();
+  for file in fs::read_dir(compatible_path).unwrap() {
+      result_strings.push(get_node_def(&mut file.unwrap().path()).unwrap());
+  }
+
+  let mut result_values: Vec<Value> = vec![];
+  for res in result_strings {
+    result_values.push(serde_json::from_str(&res).unwrap());
+  }
+
+  serde_json::to_string( &NodesDefsOut {node_defs: result_values} ).unwrap()
 }

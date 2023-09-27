@@ -32,21 +32,13 @@ pub fn div(input: String) -> FnResult<Json<Output>> {
 #[plugin_fn]
 pub fn describe_node(_: ()) -> FnResult<String>
 {
-    let dis: String =
-        r#"{"inputs": {
-                "a": {
-                    "type": "Number"
-                },
-                "b": {
-                    "type": "Number"
-                }
-            }, 
-            "Output": {
-                "c": {
-                    "type": "Number"
-                }
-            }
-        }"#.to_string();
+    let dis: String = r#"{"name": "div",
+                        "source": "std/div.wasm",
+                        "context": {},
+                        "inlets": [{"name": "a", "type": "number"},
+                                   {"name": "b", "type": "number"}],
+                        "outlets": [{"name": "c", "type": "number"}]
+                        }"#.to_string();
 
     Ok(dis)
 }

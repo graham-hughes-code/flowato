@@ -36,19 +36,12 @@ pub fn view(input: String) -> FnResult<Json<Output>> {
 #[plugin_fn]
 pub fn describe_node(_: ()) -> FnResult<String>
 {
-    let dis: String =
-        r#"{"inputs": {
-                "a": {
-                    "type": ["Number", "String"]
-                }
-            }, 
-            "Output": {
-                "context": {
-                    "type": ["Number", "String"]
-                }
-            }
-        }"#.to_string();
-
+    let dis: String = r#"{"name": "view",
+                    "source": "std/view.wasm",
+                    "context": {},
+                    "inlets": [{"name": "a", "type": "number/string", "required": true}],
+                    "outlets": []
+                    }"#.to_string();
     Ok(dis)
 }
 
