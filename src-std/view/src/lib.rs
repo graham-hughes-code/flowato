@@ -38,7 +38,7 @@ pub fn describe_node(_: ()) -> FnResult<String>
 {
     let dis: String = r#"{"name": "view",
                     "source": "std/view.wasm",
-                    "context": {},
+                    "context": "",
                     "inlets": [{"name": "a", "type": "number/string", "required": true}],
                     "outlets": []
                     }"#.to_string();

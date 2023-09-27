@@ -30,6 +30,8 @@ export class NodeFrontEnd extends HTMLElement {
       return NaN;
     };
     const const_text = this.shadowRoot.getElementById('text');
-    const_text.innerText = "Value: " + JSON.parse(this.data);
+    if (this.data) {
+      const_text.innerText = "Value: " + JSON.parse(this.data);
+    }
   }
 }

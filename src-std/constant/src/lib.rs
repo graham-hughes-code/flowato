@@ -43,7 +43,7 @@ pub fn describe_node(_: ()) -> FnResult<String>
 {
     let dis: String = r#"{"name": "constant",
                           "source": "std/constant.wasm",
-                          "context": {"value": null},
+                          "context": {"value": ""},
                           "inlets": [],
                           "outlets": [{"name": "a", "type": "number/string"}]
                           }"#.to_string();

@@ -31,7 +31,9 @@ export class NodeFrontEnd extends HTMLElement {
       return NaN;
     };
     const const_text = this.shadowRoot.getElementById('const_text');
-    const_text.value = JSON.parse(this.data).value;
+    if (this.data) {
+      const_text.value = JSON.parse(this.data).value;
+    }
     const_text.oninput  = () => {this.data_callback({value: (isNaN(filterFloat(const_text.value))?const_text.value:filterFloat(const_text.value))})};
   }
 }
