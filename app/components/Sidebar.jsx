@@ -16,9 +16,8 @@ export default function SideBar() {
     invoke('get_all_nodes_defs')
       .then((nodes) => {
         nodes = JSON.parse(nodes);
-        console.log(nodes);
         setNodes(nodes.node_defs.map((node) => {
-          return <div className="dndnode input" onDragStart={(event) => onDragStart(event, 'custom',
+          return <div key={node.name} className="dndnode input" onDragStart={(event) => onDragStart(event, 'custom',
               {...node,
                "inlets": node.inlets.map((inlet) => {return {...inlet, "id": new_uuid()}}),
                "outlets": node.outlets.map((outlet) => {return {...outlet, "id": new_uuid()}})
