@@ -35,8 +35,8 @@ pub fn describe_node(_: ()) -> FnResult<String>
     let dis: String = r#"{"name": "div",
                         "source": "std/div.wasm",
                         "context": {},
-                        "inlets": [{"name": "a", "type": "number"},
-                                   {"name": "b", "type": "number"}],
+                        "inlets": [{"name": "a", "type": "number", "required": true},
+                                   {"name": "b", "type": "number", "required": true}],
                         "outlets": [{"name": "c", "type": "number"}]
                         }"#.to_string();
 

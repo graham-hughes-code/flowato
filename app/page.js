@@ -82,7 +82,7 @@ export default function App() {
         setNodes((nds) =>
           nds.map((node) => {
             const new_node = state.graph.nodes.find((n) => {return n.id == node.id});
-            if (JSON.stringify(new_node.context) !== JSON.stringify(node.data.def.context)) {
+            if (new_node.context && (JSON.stringify(new_node.context) !== JSON.stringify(node.data.def.context))) {
               node.data = {...node.data, def: {...node.data.def, context: new_node.context}};
             }
             return node;
