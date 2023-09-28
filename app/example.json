@@ -2,7 +2,7 @@
   "version": "0.0.1",
   "graph": {
     "nodes": [
-      {"id": "n_asdfasdfg234f", "name": "add", "source": "std/add.wasm", "pos": {"x": 300, "y": 300},
+      {"id": "n_asdfasdfg234f", "name": "add", "source": "std/add.wasm", "pos": {"x": 400, "y": 300},
         "context": {},
         "inlets": [
         {"id": "in_as3dsffg2334f", "name": "a", "type": "number", "required": true},
@@ -22,13 +22,13 @@
        "outlets": [
         {"id": "out_adddddfe423hs", "name": "a", "type": "number"}
        ]},
-       {"id": "n_gkeasdfagjgff", "name": "constant", "source": "std/constant.wasm", "pos": {"x": 300, "y": 400},
+       {"id": "n_gkeasdfagjgff", "name": "constant", "source": "std/constant.wasm", "pos": {"x": 400, "y": 400},
         "context": {"value": 5},
         "inlets": [],
        "outlets": [
         {"id": "out_ahhsadfe423hs", "name": "a", "type": "number"}
        ]},
-       {"id": "n_asdafdfjlf4f","name": "div", "source": "std/div.wasm", "pos": {"x": 500, "y": 350},
+       {"id": "n_asdafdfjlf4f","name": "div", "source": "std/div.wasm", "pos": {"x": 700, "y": 350},
         "context": {},
         "inlets": [
         {"id": "in_as3afdlvk34f", "name": "a", "type": "number", "required": true},
@@ -36,23 +36,28 @@
        "outlets": [
         {"id": "out_asdfdaslw2er234f", "name": "c", "type": "number"}
        ]},
-       {"id": "n_gkeaadfweradfgff", "name": "constant", "source": "std/constant.wasm", "pos": {"x": 300, "y": 500},
+       {"id": "n_gkeaadfweradfgff", "name": "constant", "source": "std/constant.wasm", "pos": {"x": 400, "y": 500},
         "context": {"value": "## hello _two_"},
         "inlets": [],
        "outlets": [
         {"id": "out_ahhs432dfa423hs", "name": "a", "type": "string"}
        ]},
-       {"id": "n_asdafdftsdf274f", "name": "markdown_to_html", "source": "std/markdown_to_html.wasm", "pos": {"x": 500, "y": 500},
+       {"id": "n_asdafdftsdf274f", "name": "markdown_to_html", "source": "std/markdown_to_html.wasm", "pos": {"x": 700, "y": 500},
         "context": {},
         "inlets": [
         {"id": "in_as3939dafvk34f", "name": "a", "type": "string", "required": true}],
        "outlets": [
         {"id": "out_asdffdasl7234f", "name": "c", "type": "string"}
        ]},
-       {"id": "n_asdkslcsfekkesfaf", "name": "view", "source": "std/view.wasm", "pos": {"x": 900, "y": 500},
+       {"id": "n_asdkslcsfekkesfaf", "name": "view", "source": "std/view.wasm", "pos": {"x": 900, "y": 350},
         "context": null,
         "inlets": [
         {"id": "in_as3943834234234", "name": "a", "type": "string", "required": true}],
+        "outlets": []},
+       {"id": "n_asdks2344s999sfaf", "name": "view", "source": "std/view.wasm", "pos": {"x": 900, "y": 500},
+        "context": null,
+        "inlets": [
+        {"id": "in_asfsdgd33453234", "name": "a", "type": "string", "required": true}],
         "outlets": []}
       ],
     "edges": [
@@ -80,6 +85,16 @@
         "start": "n_gkeaadfweradfgff",
         "end": "n_asdafdftsdf274f",
         "start_let": "out_ahhs432dfa423hs",
-        "end_let": "in_as3939dafvk34f"}]
+        "end_let": "in_as3939dafvk34f"},
+       {"id": "edge_adfb13412wg",
+        "start": "n_asdafdfjlf4f",
+        "end": "n_asdkslcsfekkesfaf",
+        "start_let": "out_asdfdaslw2er234f",
+        "end_let": "in_as3943834234234"},
+       {"id": "edge_adfb23452fwg",
+        "start": "n_asdafdftsdf274f",
+        "end": "n_asdks2344s999sfaf",
+        "start_let": "out_asdffdasl7234f",
+        "end_let": "in_asfsdgd33453234"}]
   }
 }
