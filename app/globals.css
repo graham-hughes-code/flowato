@@ -11,10 +11,9 @@
 }
 
 .dndflow aside {
-  border-right: 1px solid #eee;
   padding: 15px 10px;
   font-size: 12px;
-  background: #fcfcfc;
+  background: #b4bcbf;
 }
 
 .dndflow aside .description {
@@ -23,24 +22,18 @@
 }
 
 .dndflow .dndnode {
-  height: 20px;
+  height: 30px;
   padding: 4px;
-  border: 1px solid #1a192b;
-  border-radius: 2px;
+  border: 2px solid #1a192b;
+  border-radius: 4px;
   margin-bottom: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: grab;
   color: #1a1a1a;
-}
-
-.dndflow .dndnode.input {
-  border-color: #0041d0;
-}
-
-.dndflow .dndnode.output {
-  border-color: #ff0072;
+  border-color: 2px solid #525252;
+  background-color: #f8fafc;
 }
 
 .dndflow .reactflow-wrapper {

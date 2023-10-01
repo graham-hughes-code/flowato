@@ -204,7 +204,7 @@ export default function App() {
           >
             <Controls />
             <MiniMap />
-            <Background variant="dots" gap={12} size={1} style={{backgroundColor: '#03011f'}}/>
+            <Background variant="dots" gap={12} size={1} style={{backgroundColor: '#cfd8dc'}}/>
           </ReactFlow>
         </div>
       </ReactFlowProvider>
