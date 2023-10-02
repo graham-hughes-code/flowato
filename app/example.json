@@ -2,7 +2,7 @@
   "version": "0.0.1",
   "graph": {
     "nodes": [
-      {"id": "n_asdfasdfg234f", "name": "add", "source": "std/add.wasm", "pos": {"x": 400, "y": 300},
+      {"id": "n_asdfasdfg234f", "name": "add", "source": "std/add.wasm", "pos": {"x": 400, "y": 300}, "color": "#eab308",
         "context": {},
         "inlets": [
         {"id": "in_as3dsffg2334f", "name": "a", "type": "number", "required": true},
@@ -10,25 +10,25 @@
        "outlets": [
         {"id": "out_asdfasdafdwer234f", "name": "c", "type": "number"}
        ]},
-       {"id": "n_tysfsaddfgjgff","name": "constant", "source": "std/constant.wasm", "pos": {"x": 100, "y": 250},
+       {"id": "n_tysfsaddfgjgff","name": "constant", "source": "std/constant.wasm", "pos": {"x": 100, "y": 250}, "color": "#0284c7",
         "context": {"value": 3},
         "inlets": [],
        "outlets": [
         {"id": "out_aadfadfe423hs", "name": "a", "type": "number"}
        ]},
-       {"id": "n_tysfsadgsagjgff", "name": "constant", "source": "std/constant.wasm", "pos": {"x": 100, "y": 350},
+       {"id": "n_tysfsadgsagjgff", "name": "constant", "source": "std/constant.wasm", "pos": {"x": 100, "y": 350}, "color": "#0284c7",
         "context": {"value": 2},
         "inlets": [],
        "outlets": [
         {"id": "out_adddddfe423hs", "name": "a", "type": "number"}
        ]},
-       {"id": "n_gkeasdfagjgff", "name": "constant", "source": "std/constant.wasm", "pos": {"x": 400, "y": 400},
+       {"id": "n_gkeasdfagjgff", "name": "constant", "source": "std/constant.wasm", "pos": {"x": 400, "y": 400}, "color": "#0284c7",
         "context": {"value": 5},
         "inlets": [],
        "outlets": [
         {"id": "out_ahhsadfe423hs", "name": "a", "type": "number"}
        ]},
-       {"id": "n_asdafdfjlf4f","name": "div", "source": "std/div.wasm", "pos": {"x": 700, "y": 350},
+       {"id": "n_asdafdfjlf4f","name": "div", "source": "std/div.wasm", "pos": {"x": 700, "y": 350}, "color": "#eab308",
         "context": {},
         "inlets": [
         {"id": "in_as3afdlvk34f", "name": "a", "type": "number", "required": true},
@@ -36,25 +36,25 @@
        "outlets": [
         {"id": "out_asdfdaslw2er234f", "name": "c", "type": "number"}
        ]},
-       {"id": "n_gkeaadfweradfgff", "name": "constant", "source": "std/constant.wasm", "pos": {"x": 400, "y": 500},
+       {"id": "n_gkeaadfweradfgff", "name": "constant", "source": "std/constant.wasm", "pos": {"x": 400, "y": 500}, "color": "#0284c7",
         "context": {"value": "## hello _two_"},
         "inlets": [],
        "outlets": [
         {"id": "out_ahhs432dfa423hs", "name": "a", "type": "string"}
        ]},
-       {"id": "n_asdafdftsdf274f", "name": "markdown_to_html", "source": "std/markdown_to_html.wasm", "pos": {"x": 700, "y": 500},
+       {"id": "n_asdafdftsdf274f", "name": "markdown_to_html", "source": "std/markdown_to_html.wasm", "pos": {"x": 700, "y": 500}, "color": "#eab308",
         "context": {},
         "inlets": [
         {"id": "in_as3939dafvk34f", "name": "a", "type": "string", "required": true}],
        "outlets": [
         {"id": "out_asdffdasl7234f", "name": "c", "type": "string"}
        ]},
-       {"id": "n_asdkslcsfekkesfaf", "name": "view", "source": "std/view.wasm", "pos": {"x": 900, "y": 350},
+       {"id": "n_asdkslcsfekkesfaf", "name": "view", "source": "std/view.wasm", "pos": {"x": 900, "y": 350}, "color": "#16a34a",
         "context": null,
         "inlets": [
         {"id": "in_as3943834234234", "name": "a", "type": "string", "required": true}],
         "outlets": []},
-       {"id": "n_asdks2344s999sfaf", "name": "view", "source": "std/view.wasm", "pos": {"x": 900, "y": 500},
+       {"id": "n_asdks2344s999sfaf", "name": "view", "source": "std/view.wasm", "pos": {"x": 900, "y": 500}, "color": "#16a34a",
         "context": null,
         "inlets": [
         {"id": "in_asfsdgd33453234", "name": "a", "type": "string", "required": true}],

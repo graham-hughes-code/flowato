@@ -32,7 +32,7 @@ function Node({data, isConnectable}) {
       {inlets}
       {outlets}
       <div>
-        <div className='!border-neutral-600 border-b-2 px-2 font-mono text-base text-neutral-800' style={{backgroundColor: "#0284c7"}}>{data.def.name.toUpperCase()}</div>
+        <div className='!border-neutral-600 border-b-2 px-2 font-mono text-base text-neutral-800' style={{backgroundColor: data.def.color}}>{data.def.name.toUpperCase()}</div>
         <div className='nodrag m-3' >
           <data.Wrapper ref={myRef} data_callback={handleChange}></data.Wrapper>
         </div>

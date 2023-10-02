@@ -41,12 +41,13 @@ pub fn constant(input: String) -> FnResult<Json<Output>> {
 #[plugin_fn]
 pub fn describe_node(_: ()) -> FnResult<String>
 {
-    let dis: String = r#"{"name": "constant",
+    let dis: String = r##"{"name": "constant",
                           "source": "std/constant.wasm",
                           "context": {"value": ""},
+                          "color": "#0284c7",
                           "inlets": [],
                           "outlets": [{"name": "a", "type": "number/string"}]
-                          }"#.to_string();
+                          }"##.to_string();
 
     Ok(dis)
 }

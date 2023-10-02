@@ -36,6 +36,7 @@ pub mod engine {
             pub name: String,
             pub source: String,
             pub pos: Pos,
+            pub color: String,
             pub context: Value,
             pub inlets: Vec<Inlet>,
             pub outlets: Vec<Outlet>

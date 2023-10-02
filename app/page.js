@@ -55,7 +55,7 @@ example.graph.nodes.map((node, i) => {
 const initialEdges = [];
 
 example.graph.edges.map((edge, i) => {
-  initialEdges.push({ id: edge.id, source: edge.start, target: edge.end, sourceHandle: edge.start_let, targetHandle: edge.end_let, markerEnd: {type: MarkerType.ArrowClosed}});
+  initialEdges.push({ id: edge.id, source: edge.start, target: edge.end, sourceHandle: edge.start_let, targetHandle: edge.end_let, markerEnd: {type: MarkerType.ArrowClosed, color: "#525252", width: 15, height: 15}, style: {stroke: "#525252"} });
 });
 
 // we define the nodeTypes outside of the component to prevent re-renderings
@@ -103,7 +103,7 @@ export default function App() {
                               'start': params.source, 'start_let': params.sourceHandle,
                               'end': params.target, 'end_let': params.targetHandle});
     setEdges((eds) =>
-      addEdge({...params, id: id, markerEnd: {type: MarkerType.ArrowClosed}}, eds));
+      addEdge({...params, id: id, markerEnd: {type: MarkerType.ArrowClosed, color: "#525252", width: 15, height: 15}, style: {stroke: "#525252"}}, eds));
   }, [setEdges]);
 
   const onEdgeUpdateStart = useCallback(() => {
