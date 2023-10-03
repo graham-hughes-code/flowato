@@ -33,12 +33,12 @@ pub fn mul(input: String) -> FnResult<Json<Output>> {
 pub fn describe_node(_: ()) -> FnResult<String>
 {
     let dis: String = r##"{"name": "mul",
-                        "source": "std/mul.wasm",
-                        "context": {},
-                        "color": "#eab308",
-                        "inlets": [{"name": "a", "type": "number", "required": true},
-                                   {"name": "b", "type": "number", "required": true}],
-                        "outlets": [{"name": "c", "type": "number"}]
-                        }"##.to_string();
+                           "source": "std/mul.wasm",
+                           "context": {},
+                           "color": "#eab308",
+                           "inlets": [{"name": "a", "type": "number", "required": true},
+                                      {"name": "b", "type": "number", "required": true}],
+                           "outlets": [{"name": "c", "type": "number"}]
+                          }"##.to_string();
     Ok(dis)
 }
