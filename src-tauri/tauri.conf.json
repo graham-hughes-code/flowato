@@ -57,10 +57,10 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 600,
+        "height": 800,
+        "width": 1200,
         "resizable": true,
         "title": "flowato-prototype",
-        "width": 800,
         "fileDropEnabled": false
       }
     ]
