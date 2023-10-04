@@ -36,8 +36,8 @@
        "outlets": [
         {"id": "out_asdfdaslw2er234f", "name": "c", "type": "number"}
        ]},
-       {"id": "n_gkeaadfweradfgff", "name": "constant", "source": "std/constant.wasm", "pos": {"x": 400, "y": 500}, "color": "#0284c7",
-        "context": {"value": "## hello _two_"},
+       {"id": "n_gkeaadfweradfgff", "name": "constant_long", "source": "std/constant_long.wasm", "pos": {"x": 150, "y": 500}, "color": "#0284c7",
+        "context": {"value": "# h1 Heading\n## h2 Heading\n### h3 Heading\n#### h4 Heading\n##### h5 Heading\n###### h6 Heading"},
         "inlets": [],
        "outlets": [
         {"id": "out_ahhs432dfa423hs", "name": "a", "type": "string"}

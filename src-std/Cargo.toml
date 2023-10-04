@@ -2,6 +2,7 @@
 
 members = [
     "constant",
+    "constant_long",
     "markdown_to_html",
     "math/add",
     "math/div",

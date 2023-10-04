@@ -199,6 +199,7 @@ export default function App() {
             onDrop={onDrop}
             onDragOver={onDragOver}
             maxZoom={5}
+            minZoom={.1}
             deleteKeyCode={delkeys}
             fitView
           >
