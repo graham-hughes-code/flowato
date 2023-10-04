@@ -7,5 +7,6 @@ members = [
     "math/div",
     "math/mul",
     "math/sub",
-    "view"
+    "view",
+    "view_html"
 ]

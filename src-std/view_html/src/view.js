@@ -19,13 +19,13 @@ export class NodeFrontEnd extends HTMLElement {
     this[property] = newValue;
 
     const const_text = this.shadowRoot.getElementById('text');
-    const_text.innerText = "Value: " + JSON.parse(this.data);
+    const_text.innerHTML = JSON.parse(this.data);
   }
 
   connectedCallback() {
     const const_text = this.shadowRoot.getElementById('text');
     if (this.data) {
-      const_text.innerText = "Value: " + JSON.parse(this.data);
+      const_text.innerHTML = JSON.parse(this.data);
     }
   }
 }

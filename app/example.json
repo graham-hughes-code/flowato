@@ -54,7 +54,7 @@
         "inlets": [
         {"id": "in_as3943834234234", "name": "a", "type": "string", "required": true}],
         "outlets": []},
-       {"id": "n_asdks2344s999sfaf", "name": "view", "source": "std/view.wasm", "pos": {"x": 900, "y": 500}, "color": "#16a34a",
+       {"id": "n_asdks2344s999sfaf", "name": "view_html", "source": "std/view_html.wasm", "pos": {"x": 900, "y": 500}, "color": "#16a34a",
         "context": null,
         "inlets": [
         {"id": "in_asfsdgd33453234", "name": "a", "type": "string", "required": true}],
