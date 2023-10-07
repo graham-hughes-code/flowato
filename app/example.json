@@ -1,5 +1,6 @@
 {
   "version": "0.0.1",
+  "execution": 0,
   "graph": {
     "nodes": [
       {"id": "n_asdfasdfg234f", "name": "add", "source": "std/add.wasm", "pos": {"x": 400, "y": 300}, "color": "#eab308",

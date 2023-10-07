@@ -15,7 +15,8 @@ pub mod engine {
         #[derive(Serialize, Deserialize, Debug)]
         pub struct State {
             pub version: String,
-            pub graph: Graph
+            pub graph: Graph,
+            pub execution: i32
         }
 
         #[derive(Serialize, Deserialize, Debug)]

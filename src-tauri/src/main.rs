@@ -7,9 +7,16 @@ use std::path::PathBuf;
 use serde_json::Value;
 use serde::{Deserialize, Serialize};
 use flow_engine::engine::{get_node_frontend, run_flow, get_node_def, state::State};
+use std::sync::Mutex;
+use tauri::State as TauriState;
+
+struct ExecutionRun {
+  run: Mutex<i32>
+}
 
 fn main() {
   tauri::Builder::default()
+    .manage(ExecutionRun {run: 0.into()} )
     .invoke_handler(tauri::generate_handler![node_frontend, run_flow_tauri, get_all_nodes_defs])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
@@ -39,12 +46,16 @@ struct Info {
 }
 
 #[tauri::command]
-async fn run_flow_tauri(info: String, handle: tauri::AppHandle) -> String {
+async fn run_flow_tauri(info: String, handle: tauri::AppHandle, execution_run: TauriState<'_, ExecutionRun>) -> Result<String, String> {
 
   let info: Result<Info, String> = match serde_json::from_str(&info) {
                     Ok(info) => Ok(info),
-                    Err(e) => return format!("Error malformed state json {:?}", e)
+                    Err(e) => return Err(format!("Error malformed state json {:?}", e))
                 };
+
+  let mut execution_run: std::sync::MutexGuard<'_, i32> = execution_run.run.lock().unwrap();
+
+  *execution_run += 1;
 
   let resource_path = handle.path_resolver()
     .resolve_resource("../")
@@ -58,7 +69,9 @@ async fn run_flow_tauri(info: String, handle: tauri::AppHandle) -> String {
 
   run_flow(&mut state, &triggered_by, &compatible_path);
 
-  return serde_json::to_string(&state).unwrap();
+  state.execution = *execution_run;
+
+  return Ok(serde_json::to_string(&state).unwrap());
 }
 
 #[derive(Serialize, Deserialize, Debug)]
