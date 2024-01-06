@@ -51,12 +51,12 @@
         {"id": "out_asdffdasl7234f", "name": "c", "type": "string"}
        ]},
        {"id": "n_asdkslcsfekkesfaf", "name": "view", "source": "std/view.wasm", "pos": {"x": 900, "y": 350}, "color": "#16a34a",
-        "context": null,
+        "context": 1.0,
         "inlets": [
         {"id": "in_as3943834234234", "name": "a", "type": "string", "required": true}],
         "outlets": []},
        {"id": "n_asdks2344s999sfaf", "name": "view_html", "source": "std/view_html.wasm", "pos": {"x": 900, "y": 500}, "color": "#16a34a",
-        "context": null,
+        "context": "<h1>h1 Heading</h1>\n<h2>h2 Heading</h2>\n<h3>h3 Heading</h3>\n<h4>h4 Heading</h4>\n<h5>h5 Heading</h5>\n<h6>h6 Heading</h6>",
         "inlets": [
         {"id": "in_asfsdgd33453234", "name": "a", "type": "string", "required": true}],
         "outlets": []}
