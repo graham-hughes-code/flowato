@@ -18,12 +18,12 @@ export class NodeFrontEnd extends HTMLElement {
     if (oldValue === newValue) return;
     this[property] = newValue;
 
-    const const_text = this.shadowRoot.getElementById('text');
+    const const_text = this.shadowRoot.getElementById("text");
     const_text.innerText = "Value: " + JSON.parse(this.data);
   }
 
   connectedCallback() {
-    const const_text = this.shadowRoot.getElementById('text');
+    const const_text = this.shadowRoot.getElementById("text");
     if (this.data) {
       const_text.innerText = "Value: " + JSON.parse(this.data);
     }

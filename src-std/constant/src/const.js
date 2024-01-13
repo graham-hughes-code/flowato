@@ -19,21 +19,26 @@ export class NodeFrontEnd extends HTMLElement {
     if (oldValue === newValue) return;
     this[property] = newValue;
 
-    const const_text = this.shadowRoot.getElementById('const_text');
+    const const_text = this.shadowRoot.getElementById("const_text");
     const_text.value = JSON.parse(this.data).value;
   }
 
   connectedCallback() {
     const filterFloat = function (value) {
-      if(/^(\-|\+)?([0-9]+(\.[0-9]+)?|Infinity)$/
-        .test(value))
-      return Number(value);
+      if (/^(\-|\+)?([0-9]+(\.[0-9]+)?|Infinity)$/.test(value))
+        return Number(value);
       return NaN;
     };
-    const const_text = this.shadowRoot.getElementById('const_text');
+    const const_text = this.shadowRoot.getElementById("const_text");
     if (this.data) {
       const_text.value = JSON.parse(this.data).value;
     }
-    const_text.oninput  = () => {this.data_callback({value: (isNaN(filterFloat(const_text.value))?const_text.value:filterFloat(const_text.value))})};
+    const_text.oninput = () => {
+      this.data_callback({
+        value: isNaN(filterFloat(const_text.value))
+          ? const_text.value
+          : filterFloat(const_text.value),
+      });
+    };
   }
 }

@@ -1,21 +1,21 @@
 use extism_pdk::*;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]
 struct Input {
-    pub a: ContextValue
+    pub a: ContextValue,
 }
 
 #[derive(Serialize, Deserialize)]
 #[serde(untagged)]
 enum ContextValue {
     S(String),
-    N(f64)
+    N(f64),
 }
 
 #[derive(Serialize)]
 struct Output {
-    pub context: ContextValue
+    pub context: ContextValue,
 }
 
 #[plugin_fn]
@@ -25,30 +25,30 @@ pub fn view(input: String) -> FnResult<Json<Output>> {
     match serde_json::from_str(&input) {
         Ok(data) => {
             input_data = data;
-        },
-        Err(err) => return Err(WithReturnCode::from(err))
+        }
+        Err(err) => return Err(WithReturnCode::from(err)),
     }
 
-    Ok(Json(Output { context: input_data.a }))
+    Ok(Json(Output {
+        context: input_data.a,
+    }))
 }
 
-
 #[plugin_fn]
-pub fn describe_node(_: ()) -> FnResult<String>
-{
+pub fn describe_node(_: ()) -> FnResult<String> {
     let dis: String = r##"{"name": "view",
                            "source": "std/view.wasm",
                            "context": "",
                            "color": "#16a34a",
                            "inlets": [{"name": "a", "type": "number/string", "required": true}],
                            "outlets": []
-                          }"##.to_string();
+                          }"##
+    .to_string();
     Ok(dis)
 }
 
 #[plugin_fn]
-pub fn node_frontend(_: ()) -> FnResult<&'static str>
-{
+pub fn node_frontend(_: ()) -> FnResult<&'static str> {
     let web_comp: &'static str = include_str!("view.js");
     Ok(web_comp)
 }
