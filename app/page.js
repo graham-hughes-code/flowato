@@ -26,22 +26,25 @@ import example from './example.json'
 
 import SideBar from './components/Sidebar';
 
-
-const sources = [...new Set(example.graph.nodes.map((n) => {return {"name": n.name, "source": n.source}}))];
-
-sources.forEach((source) => {
+const import_element = (name, source) => {
   "use client"
-  invoke('node_frontend', {source: source.source})
+  invoke('node_frontend', {source: source})
     .then((s) => {
       if( s !== "") {
         import(/* webpackIgnore: true */ `data:text/javascript;charset=utf-8,${encodeURIComponent(s)}`).then((node) =>{
-        if (!customElements.get(`node-${source.name}`)) {
-          customElements.define(`node-${source.name}`, node.NodeFrontEnd);
+        if (!customElements.get(`node-${name}`)) {
+          customElements.define(`node-${name}`, node.NodeFrontEnd);
         };
       })
       }
     })
     .catch(console.error)
+}
+
+const nodes = [...new Set(example.graph.nodes.map((n) => {return {"name": n.name, "source": n.source}}))];
+
+nodes.forEach((node) => {
+  import_element(node.name, node.source)
 });
 
 const initialNodes = [];
@@ -148,6 +151,8 @@ export default function App() {
       if (typeof data.nodeType === 'undefined' || !data.nodeType) {
         return;
       }
+
+      import_element(data.def.name, data.def.source)
 
       const newId = new_uuid();
       const position = reactFlowInstance.project({
