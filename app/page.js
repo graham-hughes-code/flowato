@@ -1,5 +1,5 @@
-"use client"
-import React, { useCallback, useRef, useState, useEffect } from 'react';
+"use client";
+import React, { useCallback, useRef, useState, useEffect } from "react";
 import ReactFlow, {
   MiniMap,
   Controls,
@@ -11,54 +11,74 @@ import ReactFlow, {
   MarkerType,
   ReactFlowProvider,
   onNodeDragStop,
-} from 'reactflow';
-import {v4 as uuidv4} from 'uuid';
-
-import 'reactflow/dist/style.css';
-
-import { invoke } from '@tauri-apps/api/tauri'
-
-import { wrapWc } from 'wc-react';
-
-import Node from './components/Node.jsx';
-
-import example from './example.json'
-
-import SideBar from './components/Sidebar';
+} from "reactflow";
+import { v4 as uuidv4 } from "uuid";
+import "reactflow/dist/style.css";
+import { invoke } from "@tauri-apps/api/tauri";
+import { wrapWc } from "wc-react";
+import Node from "./components/Node.jsx";
+import example from "./example.json";
+import SideBar from "./components/Sidebar";
 
 const import_element = (name, source) => {
-  "use client"
-  invoke('node_frontend', {source: source})
-    .then((s) => {
-      if( s !== "") {
-        import(/* webpackIgnore: true */ `data:text/javascript;charset=utf-8,${encodeURIComponent(s)}`).then((node) =>{
-        if (!customElements.get(`node-${name}`)) {
-          customElements.define(`node-${name}`, node.NodeFrontEnd);
-        };
-      })
+  "use client";
+  invoke("node_frontend", { source: source })
+    .then((source_string) => {
+      if (source_string !== "") {
+        import(
+          /* webpackIgnore: true */ `data:text/javascript;charset=utf-8,${encodeURIComponent(
+            source_string
+          )}`
+        ).then((node) => {
+          if (!customElements.get(`node-${name}`)) {
+            customElements.define(`node-${name}`, node.NodeFrontEnd);
+          }
+        });
       }
     })
-    .catch(console.error)
-}
+    .catch(console.error);
+};
 
-const nodes = [...new Set(example.graph.nodes.map((n) => {return {"name": n.name, "source": n.source}}))];
+const nodes = [
+  ...new Set(
+    example.graph.nodes.map((n) => {
+      return { name: n.name, source: n.source };
+    })
+  ),
+];
 
 nodes.forEach((node) => {
-  import_element(node.name, node.source)
+  import_element(node.name, node.source);
 });
 
 const initialNodes = [];
 
 example.graph.nodes.map((node, i) => {
-  initialNodes.push(
-    { id: node.id, type: 'custom', position: { x: node.pos.x, y: node.pos.y }, data: {def: node, Wrapper: wrapWc(`node-${node.name}`)}}
-  )
+  initialNodes.push({
+    id: node.id,
+    type: "custom",
+    position: { x: node.pos.x, y: node.pos.y },
+    data: { def: node, Wrapper: wrapWc(`node-${node.name}`) },
+  });
 });
 
 const initialEdges = [];
 
 example.graph.edges.map((edge, i) => {
-  initialEdges.push({ id: edge.id, source: edge.start, target: edge.end, sourceHandle: edge.start_let, targetHandle: edge.end_let, markerEnd: {type: MarkerType.ArrowClosed, color: "#525252", width: 15, height: 15}, style: {stroke: "#525252"} });
+  initialEdges.push({
+    id: edge.id,
+    source: edge.start,
+    target: edge.end,
+    sourceHandle: edge.start_let,
+    targetHandle: edge.end_let,
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+      color: "#525252",
+      width: 15,
+      height: 15,
+    },
+    style: { stroke: "#525252" },
+  });
 });
 
 // we define the nodeTypes outside of the component to prevent re-renderings
@@ -67,7 +87,7 @@ const nodeTypes = { custom: Node };
 
 const new_uuid = () => uuidv4();
 
-const delkeys = ['Backspace', 'Delete']
+const delkeys = ["Backspace", "Delete"];
 
 export default function App() {
   const reactFlowWrapper = useRef(null);
@@ -75,23 +95,33 @@ export default function App() {
 
   const onUpdateContext = (data, node_id) => {
     example.graph.nodes.forEach((element, index) => {
-      if (element.id == node_id ) {
+      if (element.id == node_id) {
         example.graph.nodes[index].context = data;
       }
     });
-    invoke('run_flow_tauri', {info: JSON.stringify({state: example, triggered_by: node_id})})
+    invoke("run_flow_tauri", {
+      info: JSON.stringify({ state: example, triggered_by: node_id }),
+    })
       .then((state) => {
         state = JSON.parse(state);
-        if ( example.execution < state.execution ) {
+        if (example.execution < state.execution) {
           example.execution = state.execution;
 
           setNodes((nds) =>
             nds.map((node) => {
-              const new_node = state.graph.nodes.find((n) => {return n.id == node.id});
-              if (new_node.context
-                  && (JSON.stringify(new_node.context) !== JSON.stringify(node.data.def.context))
-                  && node_id != node.id) {
-                node.data = {...node.data, def: {...node.data.def, context: new_node.context}};
+              const new_node = state.graph.nodes.find((n) => {
+                return n.id == node.id;
+              });
+              if (
+                new_node.context &&
+                JSON.stringify(new_node.context) !==
+                  JSON.stringify(node.data.def.context) &&
+                node_id != node.id
+              ) {
+                node.data = {
+                  ...node.data,
+                  def: { ...node.data.def, context: new_node.context },
+                };
               }
               return node;
             })
@@ -101,19 +131,44 @@ export default function App() {
       .catch(console.error);
   };
 
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes.map((n) => { n.data = {...n.data, data_callback: onUpdateContext}; return n; }));
+  const [nodes, setNodes, onNodesChange] = useNodesState(
+    initialNodes.map((n) => {
+      n.data = { ...n.data, data_callback: onUpdateContext };
+      return n;
+    })
+  );
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
 
-  const onConnect = useCallback((params) => {
-    
-    const id = new_uuid();
-    example.graph.edges.push({'id': id,
-                              'start': params.source, 'start_let': params.sourceHandle,
-                              'end': params.target, 'end_let': params.targetHandle});
-    setEdges((eds) =>
-      addEdge({...params, id: id, markerEnd: {type: MarkerType.ArrowClosed, color: "#525252", width: 15, height: 15}, style: {stroke: "#525252"}}, eds));
-  }, [setEdges]);
+  const onConnect = useCallback(
+    (params) => {
+      const id = new_uuid();
+      example.graph.edges.push({
+        id: id,
+        start: params.source,
+        start_let: params.sourceHandle,
+        end: params.target,
+        end_let: params.targetHandle,
+      });
+      setEdges((eds) =>
+        addEdge(
+          {
+            ...params,
+            id: id,
+            markerEnd: {
+              type: MarkerType.ArrowClosed,
+              color: "#525252",
+              width: 15,
+              height: 15,
+            },
+            style: { stroke: "#525252" },
+          },
+          eds
+        )
+      );
+    },
+    [setEdges]
+  );
 
   const onEdgeUpdateStart = useCallback(() => {
     edgeUpdateSuccessful.current = false;
@@ -136,7 +191,7 @@ export default function App() {
 
   const onDragOver = useCallback((event) => {
     event.preventDefault();
-    event.dataTransfer.dropEffect = 'move';
+    event.dataTransfer.dropEffect = "move";
   }, []);
 
   const onDrop = useCallback(
@@ -144,15 +199,15 @@ export default function App() {
       event.preventDefault();
 
       const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
-      const dataString = event.dataTransfer.getData('application/reactflow');
-      const data = JSON.parse(dataString)
+      const dataString = event.dataTransfer.getData("application/reactflow");
+      const data = JSON.parse(dataString);
 
       // check if the dropped element is valid
-      if (typeof data.nodeType === 'undefined' || !data.nodeType) {
+      if (typeof data.nodeType === "undefined" || !data.nodeType) {
         return;
       }
 
-      import_element(data.def.name, data.def.source)
+      import_element(data.def.name, data.def.source);
 
       const newId = new_uuid();
       const position = reactFlowInstance.project({
@@ -163,28 +218,32 @@ export default function App() {
         id: newId,
         type: data.nodeType,
         position,
-        data: {def: data.def,
-               data_callback: onUpdateContext,
-               Wrapper: wrapWc(`node-${data.def.name}`)},
+        data: {
+          def: data.def,
+          data_callback: onUpdateContext,
+          Wrapper: wrapWc(`node-${data.def.name}`),
+        },
       };
 
       setNodes((nds) => nds.concat(newNode));
-      example.graph.nodes.push({id: newId, pos: position, ...data.def});
+      example.graph.nodes.push({ id: newId, pos: position, ...data.def });
     },
     [reactFlowInstance]
   );
 
   const onNodesDelete = useCallback((event) => {
-    event.forEach(nd => {
+    event.forEach((nd) => {
       example.graph.nodes = example.graph.nodes.filter((e) => e.id !== nd.id);
-      example.graph.edges = example.graph.edges.filter((e) => (e.start !== nd.id && e.end !== nd.id));
+      example.graph.edges = example.graph.edges.filter(
+        (e) => e.start !== nd.id && e.end !== nd.id
+      );
     });
   }, []);
 
   const onNodeDragStop = useCallback((_, node) => {
     example.graph.nodes.forEach((n) => {
       if (n.id == node.id) {
-        n.pos = {x: node.position.x, y: node.position.y};
+        n.pos = { x: node.position.x, y: node.position.y };
       }
     });
   });
@@ -210,13 +269,18 @@ export default function App() {
             onDrop={onDrop}
             onDragOver={onDragOver}
             maxZoom={5}
-            minZoom={.1}
+            minZoom={0.1}
             deleteKeyCode={delkeys}
             fitView
           >
             <Controls />
             <MiniMap />
-            <Background variant="dots" gap={12} size={1} style={{backgroundColor: '#cfd8dc'}}/>
+            <Background
+              variant="dots"
+              gap={12}
+              size={1}
+              style={{ backgroundColor: "#cfd8dc" }}
+            />
           </ReactFlow>
         </div>
       </ReactFlowProvider>
