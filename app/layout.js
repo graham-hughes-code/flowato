@@ -5,7 +5,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "flowato",
-  description: "flowato-prototype",
+  description: "A flow based programming language.",
 };
 
 export default function RootLayout({ children }) {
